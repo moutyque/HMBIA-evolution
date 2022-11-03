@@ -8,6 +8,7 @@ from bs4 import BeautifulSoup
 
 
 def download_from_url(url, when=date.today().strftime("%d/%m/%Y")):
+    #TODO: do it in a independent thread
     # If there is no such folder, the script will create one automatically
     folder_location = fr'.\webscraping\{when}'
     if not os.path.exists(folder_location): os.mkdir(folder_location)
@@ -22,16 +23,19 @@ def export_tag(folder_location, soup, url, extension, tag, attribute):
     for link in soup.select(f"{tag}[{attribute}$='{extension}']"):
         # Name the pdf files using the last portion of each link which are unique in this case
         filename = os.path.join(folder_location, link[f'{attribute}'].split('/')[-1])
-        resp = requests.get(urljoin(url, link[f'{attribute}']))
-        same_size = False
-        if Path(filename).is_file():
-            with open(filename, 'rb') as f:
-                same_size = len(f.read()) == len(resp.content)
-        if not same_size:
-            print(f'Writing {filename}')
-            with open(filename, 'wb') as f:
-                f.write(resp.content)
-                print(os.path.getsize(filename))
+        try:
+            resp = requests.get(urljoin(url, link[f'{attribute}']))
+            same_size = False
+            if Path(filename).is_file():
+                with open(filename, 'rb') as f:
+                    same_size = len(f.read()) == len(resp.content)
+            if not same_size:
+                print(f'Writing {filename}')
+                with open(filename, 'wb') as f:
+                    f.write(resp.content)
+                    print(os.path.getsize(filename))
+        except ConnectionError:
+            print("ERROR")
 
 
 def export(folder_location, soup, url, extension):

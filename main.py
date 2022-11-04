@@ -6,10 +6,7 @@ from waybackpy import WaybackMachineCDXServerAPI
 import requests as requests
 from bs4 import BeautifulSoup
 import concurrent.futures
-from concurrent.futures import wait, ALL_COMPLETED
-
-files = dict()
-
+from concurrent.futures import wait
 
 def download_from_url(url, when=date.today().strftime("%d/%m/%Y")):
     # If there is no such folder, the script will create one automatically

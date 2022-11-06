@@ -143,16 +143,6 @@ if __name__ == '__main__':
     parser.add_option("--f1", "--pdf1", dest="pdf1", help="The location of pdf file1", default=None)
     parser.add_option("--f2", "--pdf2", dest="pdf2", help="The location of pdf file2", default=None)
     (options, args) = parser.parse_args()
-    # TODO: get through all files and call this methode for all
-    # TODO: add size check
-    # Get all repo
-    # Order by time
-    # For repo n get all files
-    # For each file
-    # For repo n+1 get the same file
-    # Compare
-    # Next file
-    # Next repo
     test_obj = PDF_Image_Compare(pdf1=options.pdf1, pdf2=options.pdf2)
     result_flag = test_obj.get_pdf_diff()
     if result_flag == True:

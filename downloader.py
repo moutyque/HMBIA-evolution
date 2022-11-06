@@ -8,9 +8,6 @@ from bs4 import BeautifulSoup
 import concurrent.futures
 from concurrent.futures import wait
 
-base_path = "./webscraping"
-
-
 class PDF_Image_Downloader:
     def __init__(self, base_url, base_path):
         "Constructor: Initialises file1 and file 2"
